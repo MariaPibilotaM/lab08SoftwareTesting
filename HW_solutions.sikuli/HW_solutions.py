@@ -70,18 +70,40 @@ class Calculator(unittest.TestCase):
         r = Region(Region(659,279,219,35))
 
         self.assertEqual(r.text(),"")
- 
-
         click("1586689013605.png")
         time.sleep(0.2)
         self.assertEqual(r.text(),"1")
         time.sleep(0.2)
-        for i in range(20): 
+        for i in range(21): 
            click("1586689474885.png")
-        time.sleep(0.2)
-        #r = Region(Region(696,261,267,62))
-        
+        time.sleep(0.2)        
         self.assertEqual(len(r.text()),20)
+        
+    def test_calc_purple(self):
+        r= Region(Region(660,218,212,36))
+        line = r.collectLines()
+        self.assertEqual(line[0].text(),"0")
+        click("1586700817916.png")
+        click("1586700831339.png")
+        click("1586700817916.png")
+        self.assertEqual(line[0].text(),"4")
+        for i in range(3):
+            click("1586700969420.png")
+        click("1586700817916.png")
+        click("1586701009475.png")
+        click("1586701021899.png")
+        click("1586700831339.png")
+        self.assertEqual(line[0].text(),"6")
+    def test_calc_err(self):
+        r= Region(Region(660,218,212,36))
+        click("1586701381521.png")
+        click("1586701387587.png")
+        click("1586701396607.png")
+        print(r.text())
+        self.assertEqual(r.text(),"Error")
+       
+        
+        
 
        
 
