@@ -40,11 +40,17 @@ class Folders(unittest.TestCase):
         self.assertIsNotNone(exists( "greenFolder.png"))
         
     def test_menu(self):
-        r = Region(Region(469,157,597,462))
+        r = Region(Region(474,168,586,445))
         
-        dragDrop("blueFolder.png",Location(r.x,r.y+40))
+        dragDrop("blueFolder.png",Location(r.x,r.y+70))
         rightClick("closeUp.PNG")
+        #rightClick(Location(r.x+10,r.y+40))
+        print(r.text())
         time.sleep(0.2)
+        lines = r.collectLines()
+        words = ["Copy","Paste","Search on Bing"]
+        for i in range(len(lines)):
+            uprint(lines[i].text())
 
         
 class Calculator(unittest.TestCase):
@@ -60,17 +66,24 @@ class Calculator(unittest.TestCase):
 
     def test_acalc_black(self):
         time.sleep(0.2)
-        self.assertIsNotNone(exists( "empty.png"))
+        #r = Region(Region(696,261,267,62))
+        r = Region(Region(659,279,219,35))
+
+        self.assertEqual(r.text(),"")
+ 
 
         click("1586689013605.png")
         time.sleep(0.2)
-        self.assertIsNotNone(exists( "1586689977446.png"))
-        for i in range(2): 
+        self.assertEqual(r.text(),"1")
+        time.sleep(0.2)
+        for i in range(20): 
            click("1586689474885.png")
         time.sleep(0.2)
-        r = Region(Region(641,265,264,66))
-        #self.assertIsNotNone(exists( "1586690905053.png"))
+        #r = Region(Region(696,261,267,62))
+        
+        self.assertEqual(len(r.text()),20)
 
+       
 
         
         
@@ -82,6 +95,6 @@ class Calculator(unittest.TestCase):
                                 
 if __name__ == '__main__':
     #suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
-    suite = unittest.TestLoader().loadTestsFromTestCase(Folders)
-    #suite = unittest.TestLoader().loadTestsFromTestCase(Calculator)
+   # suite = unittest.TestLoader().loadTestsFromTestCase(Folders)
+    suite = unittest.TestLoader().loadTestsFromTestCase(Calculator)
     unittest.TextTestRunner(verbosity=3).run(suite)
