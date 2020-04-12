@@ -93,6 +93,7 @@ class Calculator(unittest.TestCase):
         click("1586701009475.png")
         click("1586701021899.png")
         click("1586700831339.png")
+        time.sleep(0.2)
         self.assertEqual(line[0].text(),"6")
     def test_calc_err(self):
         r= Region(Region(660,218,212,36))
@@ -100,9 +101,45 @@ class Calculator(unittest.TestCase):
         click("1586701387587.png")
         click("1586701396607.png")
         print(r.text())
+        time.sleep(0.2)
         self.assertEqual(r.text(),"Error")
        
+class PinCode(unittest.TestCase):
+
+    h = Helper("lab08-Homework")
+    
+    def setUp(self):
+        self.h.openSUT()
+        click("1586701809039.png")
+
+    def tearDown(self):
+        self.h.closeSUT()  
         
+    def test_pin_x(self):
+        r= Region(Region(703,226,132,35))
+        for i in range(4):
+            click("1586701945860.png")
+            time.sleep(0.2)
+            self.assertEqual(r.text(),"X"*(i+1))
+        
+    def test_pin_unlock(self):
+        click("1586702294779.png")
+        click("1586702304332.png")
+        click("1586702314867.png")
+        click("1586702324802.png")
+        time.sleep(0.5)
+        r=Region(Region(490,170,554,424))
+
+        self.assertIn("Welcome,", r.text())
+        self.assertIn("!", r.text())
+        
+    def test_pin_lock(self): 
+         r= Region(Region(703,226,132,35))
+         
+         for i in range(4):
+ 
+             click("1586701945860.png")
+         self.assertIsNotNone(exists("1586703233026.png"))
         
 
        
@@ -118,5 +155,6 @@ class Calculator(unittest.TestCase):
 if __name__ == '__main__':
     #suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
    # suite = unittest.TestLoader().loadTestsFromTestCase(Folders)
-    suite = unittest.TestLoader().loadTestsFromTestCase(Calculator)
+ #   suite = unittest.TestLoader().loadTestsFromTestCase(Calculator)
+    suite = unittest.TestLoader().loadTestsFromTestCase(PinCode)
     unittest.TextTestRunner(verbosity=3).run(suite)
