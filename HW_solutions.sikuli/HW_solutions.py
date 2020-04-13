@@ -13,6 +13,7 @@ class Folders(unittest.TestCase):
 
     def tearDown(self):
         self.h.closeSUT()
+    
     def test_apps_delete(self):
         icons = findAllList("file.png")
         number = len(icons)
@@ -30,27 +31,32 @@ class Folders(unittest.TestCase):
         dragDrop(icons[3],"greenFolder.png")
         time.sleep(0.2)
         self.assertEqual(len(findAllList("fileCloseup.png")),number)
-
     def test_move_folders(self):
         dragDrop("blueFolder.png","greenFolder.png")
         self.assertIsNotNone(exists( "blueOnGreen.png"))
         dragDrop("blueFolder.png","orangeFolder.png")
         self.assertIsNotNone(exists( "blueOnOrange.png"))
         dragDrop("greenFolder.png","blueFolder.png")
-        self.assertIsNotNone(exists( "greenFolder.png"))
-        
+        self.assertIsNotNone(exists( "greenFolder.png"))    
     def test_menu(self):
-        r = Region(Region(474,168,586,445))
+        r = Region(Region(473,237,6,86))
         
-        dragDrop("blueFolder.png",Location(r.x,r.y+70))
-        rightClick("closeUp.PNG")
-        #rightClick(Location(r.x+10,r.y+40))
-        print(r.text())
-        time.sleep(0.2)
-        lines = r.collectLines()
-        words = ["Copy","Paste","Search on Bing"]
-        for i in range(len(lines)):
-            uprint(lines[i].text())
+        dragDrop("blueFolder.png",Location(r.x,r.y))
+        rightClick("1586758751310.png")
+        self.assertIsNotNone(exists( "1586757463468.png"))
+        r = Region(Region(681,156,90,10))
+        dragDrop("file.png",Location(r.x,r.y))
+        rightClick("1586758659481.png")
+        self.assertIsNotNone(exists( "1586757463468.png"))
+        r = Region(Region(1048,332,9,58))
+        dragDrop("greenFolder.png",Location(r.x,r.y))
+        rightClick(("1586758670020.png"))
+        self.assertIsNotNone(exists( "1586757463468.png"))
+        r = Region(Region(558,598,270,13))
+        dragDrop("orangeFolder.png",Location(r.x,r.y))
+        rightClick("1586758085282.png")
+        self.assertIsNotNone(exists( "1586757463468.png"))
+        
 
         
 class Calculator(unittest.TestCase):
@@ -387,9 +393,9 @@ class CatFlower(unittest.TestCase):
                                  
 if __name__ == '__main__':
     #suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
-   # suite = unittest.TestLoader().loadTestsFromTestCase(Folders)
+    suite = unittest.TestLoader().loadTestsFromTestCase(Folders)
  #   suite = unittest.TestLoader().loadTestsFromTestCase(Calculator)
  #suite = unittest.TestLoader().loadTestsFromTestCase(PinCode)
-    suite = unittest.TestLoader().loadTestsFromTestCase(Converter)
+    #suite = unittest.TestLoader().loadTestsFromTestCase(Converter)
     #suite = unittest.TestLoader().loadTestsFromTestCase(CatFlower)
     unittest.TextTestRunner(verbosity=3).run(suite)
